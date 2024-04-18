@@ -39,12 +39,18 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    //서버에서도 검증
+
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
 
     annotationProcessor(
             "jakarta.persistence:jakarta.persistence-api",
             "jakarta.annotation:jakarta.annotation-api",
             "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
+
+    //모델 처리를 위한 라이브러리 (DTO와 엔티티간의 변환 처리용) -> config.RootConfig에 적용
+    implementation 'org.modelmapper:modelmapper:3.1.0'
 
     // 레이아웃 기능을 위한 라이브러리 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" html 추가 필수
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
