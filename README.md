@@ -27,5 +27,32 @@ PageResponseDTO는 화면에 DTO의 목록과 시작 페이지/끝 페이지 등
 등록일(regDate)이 너무 길고 상세하게 나오는 것을 볼 수 있습니다. 이 부분은 Thymeleaf의 #temporals라는 유틸리티
 객체를 이용해서 처리합니다.<br>
 
-implementation 'org.springframework.boot:spring-boot-starter-validation'
-은 @NotEmpty, @Size() , @Valid<br>
+○implementation 'org.springframework.boot:spring-boot-starter-validation' 은 @NotEmpty, @Size() , @Valid와 관계<br>
+
+★ http://localhost/board/list에서 read로 이동되지만<br>
+http://localhost/board/list?size=10&type=&keyword=&page=2 형식에서 read페이지로 이동하면 오류발생하는이유<br>
+PageRequestDTO.java에서 "&keyword=" 를 $keyword= 로 잘못입력<br>
+
+○ e.preventDefault() 페이지의 동작 중단<br>
+○ e.stopPropagation() 이벤트가 상위 엘리멘트에 전달되지 않게 막아준다.(이벤트 중단)<br>
+
+○REST는 효율적, 안적적이며 확장가능한 분산 시스템을 가져올 수 있는 소프트웨어 아키텍처 디자인 제약의<br>
+모음을 나타냅니다. 그리고 그 제약들을 준수했을 때 그 시스템은 RESTful하다고 일컬어집니다.<br>
+○ URL(Uniform Resource Locator)과 URI(Uniform Resource Identifier) 자원 식별자<br>
+
+★ 워크북 515p 깃허브 1.reply_backend 참조 https://github.com/lonen8188/WorkBook/blob/1.reply_backend/build.gradle<br>
+ json 테스트용 -> postman 사용해도 무관 -> 부트3에서 작동 안함<br>
+implementation 'io.springfox:springfox-swagger-ui:3.0.0'<br>
+implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'<br>
+대신 implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2' 사용<br>
+
+★ 519p 위의 방식으로 입력하면 board/list정상작동하고 CustomServletConfig 작성 할 필요없다.<br>
+
+★ 599p 파일업로드 기능 안되니 프론트에서 테스트해볼것<br>
+
+★ReplyController.java<br>
+@ApiOperation(value = "Replies POST", notes = "POST 방식으로 댓글 등록") 대신<br>
+ @Operation(summary = "Replies POST") 사용<br>
+
+○ 539p - no session이라는 의미가 데이터베이스와 추가적인 연결이 필요해서 발생하는 문제<br>
+548p<br>
