@@ -68,4 +68,49 @@ public class BoardController {
 
         model.addAttribute("dto", boardDTO);
     }
+
+    @PostMapping("/modify")
+    public String modify( PageRequestDTO pageRequestDTO,
+                          @Valid BoardDTO boardDTO,
+                          BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes){
+
+        log.info("board modify post......" + boardDTO);
+
+        if(bindingResult.hasErrors()){
+            //문제발생할 때 errors 라는 이름으로 이동
+            
+            log.info("has errors........");
+
+            String link = pageRequestDTO.getLink();
+            //page, size, type ,keyword 추가
+
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            redirectAttributes.addAttribute("bno", boardDTO.getBno());
+
+            return "redirect:/board/modify?" + link;
+        }
+
+        boardService.modify(boardDTO);
+
+        redirectAttributes.addFlashAttribute("result", "modified");
+
+        redirectAttributes.addAttribute("bno", boardDTO.getBno());
+
+        return "redirect:/board/read";
+
+    }
+
+    @PostMapping("/remove")
+    public String remove(Long bno, RedirectAttributes redirectAttributes){
+
+        log.info("remove post.. " + bno);
+
+        boardService.remove(bno);
+
+        redirectAttributes.addFlashAttribute("result", "removed");
+
+        return "redirect:/board/list";
+    }
 }

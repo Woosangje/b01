@@ -28,8 +28,6 @@ public class PageRequestDTO {
 
     private String keyword;
 
-    private String link;
-
     public String[] getTypes(){
         if(type == null || type.isEmpty()){
             return null;
@@ -40,6 +38,8 @@ public class PageRequestDTO {
     public Pageable getPageable(String...props){
         return PageRequest.of(this.page -1, this.size, Sort.by(props).descending());
     }
+
+    private String link;
 
     public String getLink(){
     //href ? 의 링크 type과 keword는 조건문으로 제어한다.
@@ -55,7 +55,7 @@ public class PageRequestDTO {
 
             if(keyword != null){
                 try{
-                    builder.append("$keyword=" + URLEncoder.encode(keyword, "UTF-8"));
+                    builder.append("&keyword=" + URLEncoder.encode(keyword, "UTF-8"));
                 }catch (UnsupportedEncodingException e){
                 }
             }

@@ -35,7 +35,22 @@
                             <input type="text" class="form-control" th:value="${dto.writer}" name="writer" readonly>
                         </div>
 
-                        503p 중간까지
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">RegDate</span>
+                            <input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">ModDate</span>
+                            <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+                        </div>
+
+                        <div class="my-4">
+                            <div class="float-end">
+                                <button type="button" class="btn btn-primary listBtn">List</button>
+                                <button type="button" class="btn btn-secondary modBtn">Modify</button>
+                                <button type="button" class="btn btn-danger removeBtn">Remove</button>
+                            </div>
+                        </div>
 
                     </form>
                 </div><!-- end card-body-->
@@ -45,5 +60,49 @@
 </div>
 <script layout:fragment="script" th:inline="javascript">
 
+    //에러처리 부분
+    const errors = [[${errors}]]
+    console.log(errors)
+
+    let errorMsg = ''
+
+    if(errors){
+        for(let i = 0; i < errors.length; i++){
+            errorMsg += '${errors[i].field}은(는) ${errors[i].code} \n'
+        }
+        history.replaceState({}, null, null)
+        alert(errorMsg)
+    }
+    // end
+
+    //@Valid에 문제가 있을 때는 경고창이 보인 후에 다시 수정 화면으로 돌아간다.
+    const link = [[${pageRequestDTO.getLink()}]] //주소 반환 page, size, type, keyword
+    const formObj = document.querySelector("#f1")
+
+    document.querySelector(".modBtn").addEventListener("click", function(e){
+        e.preventDefault()
+        e.stopPropagation()
+
+        formObj.action = `/board/modify?${link}`
+        formObj.method = 'post'
+        formObj.submit()
+    })
+
+    //remove
+    document.querySelector(".removeBtn").addEventListener("click", function(e){
+        e.preventDefault();//페이지 동작 중단
+        e.stopPropagation();//이벤트가 상위 엘리멘트에 전달되지 않게 막아준다.(이벤트 중단)
+        formObj.action = '/board/remove'
+        formObj.method = `post`
+        formObj.submit()
+    }, false)
+
+    document.querySelector(".listBtn").addEventListener("click", function(e){
+        e.preventDefault()
+        e.stopPropagation()
+
+        formObj.reset()
+        self.location = `/board/list?${link}`
+    }, false)
 </script>
 </html>
