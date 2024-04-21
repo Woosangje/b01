@@ -56,3 +56,9 @@ implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '
 
 ○ 539p - no session이라는 의미가 데이터베이스와 추가적인 연결이 필요해서 발생하는 문제<br>
 548p<br>
+
+★ 548p 학원에서 깃을 push한것을 집의 vm에서 실행했을경우 /read 웹페이지가 실행 안되는 상황<br>
+id 'org.springframework.boot' version '3.2.4' 버전은 compiler uses the '-parameters' flag 에서발생하여<br>
+    id 'org.springframework.boot' version '3.1.0'로 수정<br>
+★ java: Attempt to recreate a file for type org.zerock.b01.domain.QBaseEntity 실행안되면 clean만 하고 javaCompile은
+설치하지 않고 웹 실행해보기<br>
