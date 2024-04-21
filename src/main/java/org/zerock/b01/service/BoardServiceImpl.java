@@ -89,9 +89,20 @@ public class BoardServiceImpl implements BoardService{
                 .build();
     }
 
-    @Override
+   @Override
     public PageResponseDTO<BoardListReplyCountDTO> listWithReplyCount(PageRequestDTO pageRequestDTO){
 
-        548p
+       String[] types = pageRequestDTO.getTypes();
+       String keyword = pageRequestDTO.getKeyword();
+       Pageable pageable = pageRequestDTO.getPageable("bno");
+
+       Page<BoardListReplyCountDTO> result = boardRepository.searchWithReplyCount(types, keyword, pageable);
+
+       return PageResponseDTO.<BoardListReplyCountDTO>withAll()
+               .pageRequestDTO(pageRequestDTO)
+               .dtoList(result.getContent())
+               .total((int)result.getTotalElements())
+               .build();
+
     }
 }
