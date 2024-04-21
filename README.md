@@ -62,3 +62,11 @@ id 'org.springframework.boot' version '3.2.4' 버전은 compiler uses the '-para
     id 'org.springframework.boot' version '3.1.0'로 수정<br>
 ★ java: Attempt to recreate a file for type org.zerock.b01.domain.QBaseEntity 실행안되면 clean만 하고 javaCompile은
 설치하지 않고 웹 실행해보기<br>
+
+○ 예외가 발생한다는 것은 분명 정상적인 결과지만 서버의 상태 코드는 500으로 서버 내부의
+오류로 처리됩니다. 외부에서 Ajax로 댓글 등록 기능을 호출했을 때 500에러가 발생한다면
+호출한 측에서는 현재 서버의 문제라고 생각할 것이고 전송하는 데이터에 문제가 있다고 생각하지는
+않을 것입니다.
+클라이언트에 서버의 문제가 아니라 데이터의 문제가 있다고 전송하기 위해서는
+@RestControllerAdvice를 이용하는  CustomRestAdvice에 DataIntegrityViolationException를
+만들어서 사용에게 예외 메시지를 전송하도록 구성합니다.
