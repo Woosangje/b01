@@ -46,6 +46,8 @@ implementation 'io.springfox:springfox-swagger-ui:3.0.0'<br>
 implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'<br>
 대신 implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2' 사용<br>
 
+★ 댓글 테스트는 http://localhost/swagger-ui/index.html 에서할것 517p참조하기
+
 ★ 519p 위의 방식으로 입력하면 board/list정상작동하고 CustomServletConfig 작성 할 필요없다.<br>
 
 ★ 599p 파일업로드 기능 안되니 프론트에서 테스트해볼것<br>
