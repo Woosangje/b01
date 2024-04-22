@@ -4,124 +4,333 @@
       layout:decorate="~{layout/basic.html}">
 <!--상단에 layout:decorator="~{layout/layout}" 은 기본 레이아웃을 layout/layout.html 파일을 사용하겠다라는 선언하는 것 입니다.-->
 <head>
-  <title>Board Read</title>
+    <title>Board Read</title>
 </head>
 
 <div layout:fragment="content">
-  <div class="row mt-3">
-    <div class="col">
-      <div class="card">
-        <div class="card-header">
-          Board Read
-        </div>
-        <div class="card-body">
-          <div class="input-group mb-3">
-            <span class="input-group-text">Bno</span>
-            <input type="text" class="form-control" th:value="${dto.bno}" readonly>
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text">Title</span>
-            <input type="text" class="form-control" th:value="${dto.title}" readonly>
-          </div>
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Board Read
+                </div>
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Bno</span>
+                        <input type="text" class="form-control" th:value="${dto.bno}" readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Title</span>
+                        <input type="text" class="form-control" th:value="${dto.title}" readonly>
+                    </div>
 
-          <div class="input-group mb-3">
-            <span class="input-group-text">Content</span>
-            <textarea class="form-control col-sm-5" rows="5" readonly>[[${dto.content}]]</textarea>
-          </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Content</span>
+                        <textarea class="form-control col-sm-5" rows="5" readonly>[[${dto.content}]]</textarea>
+                    </div>
 
-          <div class="input-group mb-3">
-            <span class="input-group-text">Writer</span>
-            <input type="text" class="form-control" th:value="${dto.writer}" readonly>
-          </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Writer</span>
+                        <input type="text" class="form-control" th:value="${dto.writer}" readonly>
+                    </div>
 
-          <div class="input-group mb-3">
-            <span class="input-group-text">RegDate</span>
-            <input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text">ModDate</span>
-            <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
-          </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">RegDate</span>
+                        <input type="text" class="form-control"
+                               th:value="${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">ModDate</span>
+                        <input type="text" class="form-control"
+                               th:value="${#temporals.format(dto.modDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+                    </div>
 
-          <div class="my-4">
-            <div class="float-end" th:with="link = ${pageRequestDTO.getLink()}">
-              <!--                                 page=1&size=10 -->
-              <a th:href="|@{/board/list}?${link}|" class="text-decoration-none">
-                <!--            board/list?page=1&size=10-->
-                <button type="button" class="btn btn-primary">List</button>
-              </a>
-              <a th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="text-decoration-none">
-                <!--           /board/modify?bno=100&page=1&size=10-->
-                <button type="button" class="btn btn-secondary">Modify</button>
-              </a>
+                    <div class="my-4">
+                        <div class="float-end" th:with="link = ${pageRequestDTO.getLink()}">
+                            <!--                                 page=1&size=10 -->
+                            <a th:href="|@{/board/list}?${link}|" class="text-decoration-none">
+                                <!--            board/list?page=1&size=10-->
+                                <button type="button" class="btn btn-primary">List</button>
+                            </a>
+                            <a th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="text-decoration-none">
+                                <!--           /board/modify?bno=100&page=1&size=10-->
+                                <button type="button" class="btn btn-secondary">Modify</button>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div><!--end card body-->
+
+
+            </div><!--end card-->
+        </div><!-- end col-->
+    </div><!-- end row-->
+
+    <div class="modal modifyModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title replyHeader"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Reply Text</span>
+                        <input type="text" class="form-control modifyText">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info modifyBtn">Modify</button>
+                    <button type="button" class="btn btn-danger removeBtn">Remove</button>
+                    <button type="button" class="btn btn-outline-dark closeModifyBtn">Close</button>
+                </div>
             </div>
-          </div>
-
-
-        </div><!--end card body-->
-
-
-
-      </div><!--end card-->
-    </div><!-- end col-->
-  </div><!-- end row-->
-
-  <div class="modal modifyModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title replyHeader"></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <div class="input-group mb-3">
-            <span class="input-group-text">Reply Text</span>
-            <input type="text" class="form-control modifyText" >
-          </div>
+    </div> <!-- end modifyModal -->
+    <!-- 댓글 추가 버튼 570   -->
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="my-4 ">
+                <button class="btn btn-info addReplyBtn">Add REPLY</button>
+            </div>
+            <ul class="list-group replyList">
+            </ul>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-info modifyBtn">Modify</button>
-          <button type="button" class="btn btn-danger removeBtn">Remove</button>
-          <button type="button" class="btn btn-outline-dark closeModifyBtn">Close</button>
+    </div>
+    <!--  댓글 페이징 추가 570  -->
+    <div class="row mt-3">
+        <div class="col">
+            <ul class="pagination replyPaging">
+            </ul>
         </div>
-      </div>
     </div>
-  </div> <!-- end modifyModal -->
-  <!-- 댓글 추가 버튼 570   -->
-  <div class="row mt-3">
-    <div class="col-md-12">
-      <div class="my-4 ">
-        <button class="btn btn-info addReplyBtn">Add REPLY</button>
-      </div>
-      <ul class="list-group replyList">
-      </ul>
-    </div>
-  </div>
-  <!--  댓글 페이징 추가 570  -->
-  <div class="row mt-3">
-    <div class="col">
-      <ul class="pagination replyPaging">
-      </ul>
-    </div>
-  </div>
+
+    <!-- 댓글 모달창-->
+    <div class="modal registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Register Reply</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Reply Text</span>
+                        <input type="text" class="form-control replyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Replyer</span>
+                        <input type="text" class="form-control replyer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary registerBtn">Register</button>
+                    <button type="button" class="btn btn-outline-dark closeRegisterBtn">Close</button>
+                </div>
 
 
-  <!--Axios를 위한 준비-->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="/js/reply.js"></script>
+            </div>
+
+        </div>
+    </div><!-- register modal-->
+
+    <!-- 댓글 수정 모달창-->
+    <div class="modal modifyModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title replyHeader"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Reply Text</span>
+                        <input type="text" class="form-control modiftyText">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info modifyBtn">Modify</button>
+                    <button type="button" class="btn btn-danger removeBtn">Remove</button>
+                    <button type="button" class="btn btn-outline-dark closeModifyBtn">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div><!-- modify modal-->
+
+
+    <!--Axios를 위한 준비-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/reply.js"></script>
 
 </div><!-- end layout:fragment="content"-->
 
 
 <script layout:fragment="script" th:inline="javascript">
 
-  const bno = [[${dto.bno}]]
+    const bno = [[${dto.bno}]]
 
-  get1(bno).then(data =>{
-    console.log(data)
-  }).catch(e => {
-    console.error(e)
-  })
+    get1(bno).then(data => {
+        console.log(data)
+    }).catch(e => {
+        console.error(e)
+    })
 
+    //goLast 변수를 이용해서 강제적으로 마지막 댓글 페이지를 호출
+    function printReplies(page, size, goLast) {
+
+        getList({bno, page, size, goLast}).then(
+            data => {
+                printList(data.dtoList) //목록 처리
+                printPages(data)    //페이지 처리
+            }
+        ).catch(e => {
+            console.error(e)
+        })
+
+    }
+
+    printReplies(1, 10, true)
+
+    // 데이터는 dtoList로 화면에 목록(replyList)을 처리하고, 나머지 정보들로 페이지 번호들을 출력
+    const replyList = document.querySelector('.replyList')  //댓글목록DOM
+    const replyPaging = document.querySelector(`.replyPaging`) //페이지 목록 DOM
+
+    function printList(dtoList) {//댓글 목록 출력
+        let str = '';
+
+        if (dtoList && dtoList.length > 0) {
+
+            for (const dto of dtoList) {
+
+                str += `<li class="list-group-item d-flex replyItem">
+                <span class="col-2">${dto.rno}</span>
+                <span class="col-6" data-rno="${dto.rno}">${dto.replyText}</span>
+                <span class="col-2">${dto.replyer}</span>
+                <span class="col-2">${dto.regDate}</span>
+                </li>`
+            }
+        }
+        replyList.innerHTML = str
+    }
+
+    function printPages(data) { // 페이지 목록 출력
+
+        //pagination
+        let pageStr = '';
+
+        if (data.prev) {
+            pageStr += `<li class="page-item"><a class="page-link"
+                    data-page="${data.start - 1}">PREV</a></li>`
+        }
+
+        for (let i = data.start; i <= data.end; i++) {
+            pageStr += `<li class="page-item ${i == data.page ? "active" : ""} ">
+         <a class="page-link" data-page="${i}">${i}</a></li>`
+        }
+
+        if (data.next) {
+            pageStr += `<li class="page-item">
+                        <a class="page-link" data-page="${data.end + 1}">NEXT</a></li>`
+
+        }
+        replyPaging.innerHTML = pageStr
+    }
+
+    //댓글 등록 모달
+    const registerModal = new bootstrap.Modal(document.querySelector(".registerModal"))
+
+    //registerModal
+    const registerBtn = document.querySelector(".registerBtn")
+    const replyText = document.querySelector(".replyText")
+    const replyer = document.querySelector(".replyer")
+    const closeRegisterBtn = document.querySelector(".closeRegisterBtn")
+
+    document.querySelector(".addReplyBtn").addEventListener("click", function (e){
+        registerModal.show()
+    },false)
+
+    closeRegisterBtn.addEventListener("click", function (e){
+        registerModal.hide()
+    },false)
+
+    //댓글 등록 버튼
+    registerBtn.addEventListener("click", function(e){
+        const replyObj = {
+            bno:bno,
+            replyText:replyText.value,
+            replyer:replyer.value}
+
+        addReply(replyObj).then(result => {
+            alert(result.rno)
+            registerModal.hide()
+            replyText.value = ''
+            replyer.value =''
+            printReplies(1,10, true)    //댓글 목록 갱신
+         }).catch(e => {
+             alert("Exception...")
+        })
+    }, false)
+
+    // 댓글 페이징 버튼 활성화
+    let page = 1
+    let size = 10
+
+    replyPaging.addEventListener("click", function (e){
+
+        e.preventDefault()
+        e.stopPropagation()
+
+        const target = e.target
+
+        if(!target || target.tagName != 'A'){
+            return
+        }
+
+        const pageNum = target.getAttribute("data-page")
+        page = pageNum
+        printReplies(page, size)
+
+    }, false)
+
+    //modifyModal
+    const modifyModal = new bootstrap.Modal(document.querySelector(".modifyModal"))
+
+    const replyHeader = document.querySelector(".replyHeader")
+    const modifyText = document.querySelector(".modifyText")
+    const modifyBtn = document.querySelector(".modifyBtn")
+    const removeBtn = document.querySelector(".removeBtn")
+    const closeModifyBtn = document.querySelector(".closeModifyBtn")
+
+    //특정한 댓글을 눌렀을 때 모달창을 보여준다.
+    replyList.addEventListener("click", function (e){
+
+        e.preventDefault()
+        e.stopPropagation()
+
+        const target = e.target
+
+        if(!target || target.tagName != `SPAN`){
+            return
+        }
+
+        const rno = target.getAttribute("data-rno")
+
+        if(!rno){
+            return
+        }
+
+        getReply(rno).then(reply => {    //댓글의 내용을 모달창에 채워서 보여주는
+
+            console.log(reply)
+            replyHeader.innerHTML = reply.rno
+            modifyText.value = reply.replyText
+            modifyModal.show()
+        }).catch(e => alert(`error`))
+    },false)
+    590p
 
 </script>
