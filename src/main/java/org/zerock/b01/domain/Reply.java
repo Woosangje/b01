@@ -25,5 +25,9 @@ public class Reply extends BaseEntity{
 
     private String replyer;
 
-    //BaseEntity( regdate , moddate )
+    public void changeText(String text){
+        this.replyText= text;
+    }
+
+    //BaseEntity  regdate , moddate  이다.
 }
