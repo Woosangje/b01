@@ -65,10 +65,39 @@ id 'org.springframework.boot' version '3.2.4' 버전은 compiler uses the '-para
 ★ java: Attempt to recreate a file for type org.zerock.b01.domain.QBaseEntity 실행안되면 clean만 하고 javaCompile은
 설치하지 않고 웹 실행해보기<br>
 
-○ 예외가 발생한다는 것은 분명 정상적인 결과지만 서버의 상태 코드는 500으로 서버 내부의
-오류로 처리됩니다. 외부에서 Ajax로 댓글 등록 기능을 호출했을 때 500에러가 발생한다면
-호출한 측에서는 현재 서버의 문제라고 생각할 것이고 전송하는 데이터에 문제가 있다고 생각하지는
+○ 예외가 발생한다는 것은 분명 정상적인 결과지만 서버의 상태 코드는 500으로 서버 내부의<br>
+오류로 처리됩니다. 외부에서 Ajax로 댓글 등록 기능을 호출했을 때 500에러가 발생한다면<br>
+호출한 측에서는 현재 서버의 문제라고 생각할 것이고 전송하는 데이터에 문제가 있다고 생각하지는<br>
 않을 것입니다.
-클라이언트에 서버의 문제가 아니라 데이터의 문제가 있다고 전송하기 위해서는
-@RestControllerAdvice를 이용하는  CustomRestAdvice에 DataIntegrityViolationException를
-만들어서 사용에게 예외 메시지를 전송하도록 구성합니다.
+클라이언트에 서버의 문제가 아니라 데이터의 문제가 있다고 전송하기 위해서는<br>
+@RestControllerAdvice를 이용하는  CustomRestAdvice에 DataIntegrityViolationException를<br>
+만들어서 사용에게 예외 메시지를 전송하도록 구성합니다.<br>
+
+
+
+○ 575p 집에서는console에 댓글 목록 500에러 발생했지만, 학원에서는 정상작동한다. 아마도 swagger.ui에서 잘못 입력한거같다.<br>
+bno: 100<br>
+modDate: "2024-04-19T17:46:37.880669"<br>
+regDate: "2024-04-19T17:46:37.880669"<br>
+replyText: "댓글....."<br>
+replyer: "repyer1"<br>
+rno: 2<br>
+
+★ printReplies(1, 10)printReplies(1, 10)대신  printReplies(1, 10, true)사용<br>
+
+★실행할 때마다 reply의 DB 1000개생기면 상단 실행 탭이 B01Application인지 testBoardReplies인지 확인할것<br>
+
+★★★인텔리제이 shift세번 누르면 오류 찾아준다.<br>
+
+#0423<br>
+★ 600p @Value("${org.zerock.upload.path}") 는 import lombok.Value가 아니라<br>
+ import org.springframework.beans.factory.annotation.Value; 이다 <br>
+
+○ 603p 파일사이즈 자동 제어<br>
+dependencies // implementation 'net.coobird:thumbnailator:0.4.16'<br>
+
+★ 615p Confirm Drop 하는 위치<br>
+오른쪽 Database탭 > webdb 오른쪽 클릭 > Drop<br>
+
+○ 575p 집에서는console에 댓글 목록 500에러 발생했지만, 학원에서는 정상작동한다. 아마도 swagger.ui나 DB의 문제가 아니다.<br>
+집에서 BoardRepository.java의 @Query(value = "select now()", nativeQuery = true) 확인해보자<br>
