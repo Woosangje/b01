@@ -88,3 +88,16 @@ rno: 2<br>
 ★실행할 때마다 reply의 DB 1000개생기면 상단 실행 탭이 B01Application인지 testBoardReplies인지 확인할것<br>
 
 ★★★인텔리제이 shift세번 누르면 오류 찾아준다.<br>
+
+#0423<br>
+★ 600p @Value("${org.zerock.upload.path}") 는 import lombok.Value가 아니라<br>
+ import org.springframework.beans.factory.annotation.Value; 이다 <br>
+
+○ 603p 파일사이즈 자동 제어<br>
+dependencies // implementation 'net.coobird:thumbnailator:0.4.16'<br>
+
+★ 615p Confirm Drop 하는 위치<br>
+오른쪽 Database탭 > webdb 오른쪽 클릭 > Drop<br>
+
+○ 575p 집에서는console에 댓글 목록 500에러 발생했지만, 학원에서는 정상작동한다. 아마도 swagger.ui나 DB의 문제가 아니다.<br>
+집에서 BoardRepository.java의 @Query(value = "select now()", nativeQuery = true) 확인해보자<br>
