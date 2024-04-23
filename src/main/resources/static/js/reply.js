@@ -38,3 +38,10 @@ async function modifyReply(replyObj){
     const response = await axios.put(`/replies/${replyObj.rno}`, replyObj)
     return response.data
 }
+
+//댓글삭제
+async function removeReply(rno){
+
+    const response = await axios.delete(`/replies/${rno}`)
+    return response.data
+}
