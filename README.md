@@ -80,3 +80,5 @@ gradle에서 security주석처리<br>
 <!--sec:authorize="hasAnyAuthority('ADMIN')"--><br>
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security"<br>
 .java 파일에서도 security관련 어노테이션 있는지 확인할것<br>
+
+CustomAuthenticationEntryPoint 주석처리해야 로그인 페이지가 안보인다.
